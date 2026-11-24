@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<title>HKTCG Timer TV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#fff;overflow:hidden;font-family:'Barlow Condensed',Arial Narrow,sans-serif;color:#1a1a1a}
+/* 舞台固定 5760x1080；按視窗比例拉伸：3840x2160 輸出會自動被商店螢幕還原成 5760x1080 */
+#stage{position:absolute;left:0;top:0;width:5760px;height:1080px;transform-origin:0 0}
+.side{position:absolute;top:0;width:1920px;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+#l{left:0}#r{left:3840px}
+.logo{font-size:120px;font-weight:800;color:#e60012;letter-spacing:6px;margin-bottom:50px}
+.t{display:flex;align-items:baseline;white-space:nowrap}
+.t b{font-size:330px;font-weight:800;line-height:1;letter-spacing:-4px;font-variant-numeric:tabular-nums}
+.t i{font-style:normal;font-size:120px;font-weight:600;color:#e60012;font-variant-numeric:tabular-nums}
+.bar{margin-top:50px;width:900px;height:12px;background:#e60012}
+.run .bar{animation:p 1s infinite}
+@keyframes p{50%{opacity:.35}}
+#mid{position:absolute;left:1920px;top:0;width:1920px;height:1080px;box-sizing:border-box;border-left:10px solid #e60012;border-right:10px solid #e60012;background:#000}
+#yt{width:100%;height:100%;border:0;pointer-events:none}
+#foot{position:absolute;left:0;right:0;bottom:0;height:24px;background:#e60012}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div class="side" id="l"><div class="logo">HKTCG</div><div class="t"><b>00:00:00</b><i>.000</i></div><div class="bar"></div></div>
+ <div id="mid"><iframe id="yt" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe></div>
+ <div class="side" id="r"><div class="logo">HKTCG</div><div class="t"><b>00:00:00</b><i>.000</i></div><div class="bar"></div></div>
+ <div id="foot"></div>
+</div>
+<script>
+// 3840x2160 輸出：舞台 x 縮 0.667、y 放 2，商店螢幕再還原。?flat=1 = 正常比例預覽（唔變形）。
+const flat=new URLSearchParams(location.search).has('flat');
+const st=document.getElementById('stage');
+function fit(){
+  const sx=innerWidth/5760, sy=innerHeight/1080;
+  if(flat){const s=Math.min(sx,sy);st.style.transform='scale('+s+')';}
+  else st.style.transform='scale('+sx+','+sy+')';
+}
+addEventListener('resize',fit);fit();
+// 影片：?v=YouTube連結或ID；按 V 換影片
+const DEFAULT_V='nP8tWAX_QNg';
+const yt=document.getElementById('yt');
+function vid(x){const m=String(x||'').match(/(?:youtu\.be\/|v=|embed\/|live\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(x||'')?x:null)}
+function loadVideo(x){const id=vid(x);if(!id)return;yt.src='https://www.youtube.com/embed/'+id+'?autoplay=1&controls=1&rel=0&playsinline=1&enablejsapi=1'}
+loadVideo(new URLSearchParams(location.search).get('v')||DEFAULT_V);
+function ytCmd(f){yt.contentWindow.postMessage(JSON.stringify({event:'command',func:f,args:''}),'*')}
+let vPlaying=true;
+// 操作：點擊計時 = 開始/暫停；Space 兩邊；R 歸零；1/2 左/右；K 影片；V 換影片；C 影片可點擊；F 全螢幕
+const p2=n=>String(n).padStart(2,'0');
+function mk(el){
+  const b=el.querySelector('b'),i=el.querySelector('i');
+  const s={run:false,acc:0,t0:0};
+  const cur=()=>s.acc+(s.run?performance.now()-s.t0:0);
+  const draw=()=>{const ms=Math.floor(cur());const h=Math.floor(ms/3600000),m=Math.floor(ms/60000)%60,sec=Math.floor(ms/1000)%60;
+    b.textContent=p2(h)+':'+p2(m)+':'+p2(sec);i.textContent='.'+String(ms%1000).padStart(3,'0');};
+  const tog=()=>{if(s.run){s.acc=cur();s.run=false}else{s.t0=performance.now();s.run=true}el.classList.toggle('run',s.run)};
+  const reset=()=>{s.acc=0;s.t0=performance.now();draw()};
+  el.addEventListener('click',tog);
+  (function loop(){draw();requestAnimationFrame(loop)})();
+  return {tog,reset,s};
+}
+const L=mk(document.getElementById('l')),R=mk(document.getElementById('r'));
+addEventListener('keydown',e=>{
+  if(e.key===' '){e.preventDefault();const run=L.s.run||R.s.run;if(run){if(L.s.run)L.tog();if(R.s.run)R.tog()}else{L.tog();R.tog()}}
+  else if(e.key==='r'||e.key==='R'){L.reset();R.reset()}
+  else if(e.key==='k'||e.key==='K'){vPlaying?ytCmd('pauseVideo'):ytCmd('playVideo');vPlaying=!vPlaying}
+  else if(e.key==='c'||e.key==='C'){yt.style.pointerEvents=yt.style.pointerEvents==='auto'?'none':'auto'}
+  else if(e.key==='v'||e.key==='V'){const u=prompt('貼上 YouTube 連結');if(u)loadVideo(u)}
+  else if(e.key==='1')L.tog();else if(e.key==='2')R.tog();
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+</script>
+</body>
+</html>
