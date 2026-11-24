@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<title>HKTCG Replay TV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#fff;overflow:hidden;font-family:'Barlow Condensed',Arial Narrow,sans-serif;color:#1a1a1a}
+/* 舞台固定 5760x1080；按視窗比例拉伸：3840x2160 輸出會自動被商店螢幕還原成 5760x1080 */
+#stage{position:absolute;left:0;top:0;width:5760px;height:1080px;transform-origin:0 0}
+.side{position:absolute;top:0;width:1920px;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+#l{left:0}#r{left:3840px}
+.logo{font-size:120px;font-weight:800;color:#e60012;letter-spacing:6px;margin-bottom:50px}
+.t{display:flex;align-items:baseline;white-space:nowrap}
+.t b{font-size:330px;font-weight:800;line-height:1;letter-spacing:-4px;font-variant-numeric:tabular-nums}
+.t i{font-style:normal;font-size:120px;font-weight:600;color:#e60012;font-variant-numeric:tabular-nums}
+.bar{margin-top:50px;width:900px;height:12px;background:#e60012}
+.run .bar{animation:p 1s infinite}
+@keyframes p{50%{opacity:.35}}
+#mid{position:absolute;left:1920px;top:0;width:1920px;height:1080px;box-sizing:border-box;border-left:10px solid #e60012;border-right:10px solid #e60012;background:#000}
+#yt{width:100%;height:100%;border:0;pointer-events:none}
+#foot{position:absolute;left:0;right:0;bottom:0;height:24px;background:#e60012}
+.side{pointer-events:none;overflow:hidden}.side svg{position:absolute;left:0;top:0}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div class="side" id="l"><svg viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="none"><defs>
+<linearGradient id="sky0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b7fd8"/><stop offset=".55" stop-color="#8fd3f4"/><stop offset="1" stop-color="#ffe9b0"/></linearGradient>
+<linearGradient id="sea0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1fb5c9"/><stop offset="1" stop-color="#0b6e99"/></linearGradient></defs>
+<g ><rect width="1920" height="1080" fill="url(#sky0)"/>
+<circle cx="1350" cy="520" r="150" fill="#fff6c8" opacity=".9"/><circle cx="1350" cy="520" r="95" fill="#ffd45e"/>
+<g fill="#fff" opacity=".92"><ellipse cx="330" cy="200" rx="190" ry="48"/><ellipse cx="460" cy="170" rx="130" ry="44"/><ellipse cx="1100" cy="130" rx="210" ry="50"/><ellipse cx="1240" cy="100" rx="120" ry="38"/><ellipse cx="1650" cy="300" rx="170" ry="42"/></g>
+<path d="M0 640 L260 430 L420 560 L640 330 L900 600 L1080 520 L1300 640 L1300 700 L0 700Z" fill="#5fae7a"/>
+<path d="M0 690 L220 540 L380 640 L600 480 L860 690 L0 700Z" fill="#3c9163"/>
+<rect y="690" width="1920" height="390" fill="url(#sea0)"/>
+<g stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".45"><path d="M200 780h200M520 840h260M1000 790h220M1400 870h300M120 960h280M800 980h240M1500 990h260"/></g>
+<path d="M1100 1080 Q1500 880 1920 940 L1920 1080Z" fill="#f4d58d"/>
+<path d="M1560 960 Q1580 780 1500 640" stroke="#6b4423" stroke-width="22" fill="none" stroke-linecap="round"/>
+<g fill="#2f8f4e"><path d="M1500 640 Q1380 600 1330 680 Q1430 630 1500 640Z"/><path d="M1500 640 Q1620 590 1700 660 Q1600 620 1500 640Z"/><path d="M1500 640 Q1450 540 1360 540 Q1440 580 1500 640Z"/><path d="M1500 640 Q1560 530 1650 540 Q1580 580 1500 640Z"/><path d="M1500 640 Q1500 560 1520 500 Q1520 580 1500 640Z"/></g>
+</g></svg></div>
+ <div id="mid"><iframe id="yt" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe></div>
+ <div class="side" id="r"><svg viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="none"><defs>
+<linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b7fd8"/><stop offset=".55" stop-color="#8fd3f4"/><stop offset="1" stop-color="#ffe9b0"/></linearGradient>
+<linearGradient id="sea1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1fb5c9"/><stop offset="1" stop-color="#0b6e99"/></linearGradient></defs>
+<g transform="translate(1920,0) scale(-1,1)"><rect width="1920" height="1080" fill="url(#sky1)"/>
+<circle cx="1350" cy="520" r="150" fill="#fff6c8" opacity=".9"/><circle cx="1350" cy="520" r="95" fill="#ffd45e"/>
+<g fill="#fff" opacity=".92"><ellipse cx="330" cy="200" rx="190" ry="48"/><ellipse cx="460" cy="170" rx="130" ry="44"/><ellipse cx="1100" cy="130" rx="210" ry="50"/><ellipse cx="1240" cy="100" rx="120" ry="38"/><ellipse cx="1650" cy="300" rx="170" ry="42"/></g>
+<path d="M0 640 L260 430 L420 560 L640 330 L900 600 L1080 520 L1300 640 L1300 700 L0 700Z" fill="#5fae7a"/>
+<path d="M0 690 L220 540 L380 640 L600 480 L860 690 L0 700Z" fill="#3c9163"/>
+<rect y="690" width="1920" height="390" fill="url(#sea1)"/>
+<g stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".45"><path d="M200 780h200M520 840h260M1000 790h220M1400 870h300M120 960h280M800 980h240M1500 990h260"/></g>
+<path d="M1100 1080 Q1500 880 1920 940 L1920 1080Z" fill="#f4d58d"/>
+<path d="M1560 960 Q1580 780 1500 640" stroke="#6b4423" stroke-width="22" fill="none" stroke-linecap="round"/>
+<g fill="#2f8f4e"><path d="M1500 640 Q1380 600 1330 680 Q1430 630 1500 640Z"/><path d="M1500 640 Q1620 590 1700 660 Q1600 620 1500 640Z"/><path d="M1500 640 Q1450 540 1360 540 Q1440 580 1500 640Z"/><path d="M1500 640 Q1560 530 1650 540 Q1580 580 1500 640Z"/><path d="M1500 640 Q1500 560 1520 500 Q1520 580 1500 640Z"/></g>
+</g></svg></div>
+ <div id="foot"></div>
+</div>
+<script>
+// 3840x2160 輸出：舞台 x 縮 0.667、y 放 2，商店螢幕再還原。?flat=1 = 正常比例預覽（唔變形）。
+const flat=new URLSearchParams(location.search).has('flat');
+const st=document.getElementById('stage');
+function fit(){
+  const sx=innerWidth/5760, sy=innerHeight/1080;
+  if(flat){const s=Math.min(sx,sy);st.style.transform='scale('+s+')';}
+  else st.style.transform='scale('+sx+','+sy+')';
+}
+addEventListener('resize',fit);fit();
+// 影片：?v=YouTube連結或ID；按 V 換影片
+const DEFAULT_V='nP8tWAX_QNg';
+const yt=document.getElementById('yt');
+function vid(x){const m=String(x||'').match(/(?:youtu\.be\/|v=|embed\/|live\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(x||'')?x:null)}
+function loadVideo(x){const id=vid(x);if(!id)return;yt.src='https://www.youtube.com/embed/'+id+'?autoplay=1&controls=1&rel=0&playsinline=1&enablejsapi=1'}
+loadVideo(new URLSearchParams(location.search).get('v')||DEFAULT_V);
+function ytCmd(f){yt.contentWindow.postMessage(JSON.stringify({event:'command',func:f,args:''}),'*')}
+let vPlaying=true;
+addEventListener('keydown',e=>{
+  if(e.key==='k'||e.key==='K'||e.key===' '){e.preventDefault();vPlaying?ytCmd('pauseVideo'):ytCmd('playVideo');vPlaying=!vPlaying}
+  else if(e.key==='c'||e.key==='C'){yt.style.pointerEvents=yt.style.pointerEvents==='auto'?'none':'auto'}
+  else if(e.key==='v'||e.key==='V'){const u=prompt('貼上 YouTube 連結');if(u)loadVideo(u)}
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+</script>
+</body>
+</html>
