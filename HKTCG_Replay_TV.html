@@ -42,7 +42,7 @@ function fit(){
 }
 addEventListener('resize',fit);fit();
 // 影片：?v=YouTube連結或ID；按 V 換影片
-const DEFAULT_V='nP8tWAX_QNg';
+const DEFAULT_V='uiBp5Z0ymkg';
 const yt=document.getElementById('yt');
 function vid(x){const m=String(x||'').match(/(?:youtu\.be\/|v=|embed\/|live\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(x||'')?x:null)}
 function loadVideo(x){const id=vid(x);if(!id)return;yt.src='https://www.youtube.com/embed/'+id+'?autoplay=1&controls=1&rel=0&playsinline=1&enablejsapi=1'}
