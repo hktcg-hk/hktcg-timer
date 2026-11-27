@@ -45,7 +45,7 @@ addEventListener('resize',fit);fit();
 const DEFAULT_V='uiBp5Z0ymkg';
 const yt=document.getElementById('yt');
 function vid(x){const m=String(x||'').match(/(?:youtu\.be\/|v=|embed\/|live\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(x||'')?x:null)}
-function loadVideo(x){const id=vid(x);if(!id)return;yt.src='https://www.youtube.com/embed/'+id+'?autoplay=1&controls=1&rel=0&playsinline=1&enablejsapi=1'}
+function loadVideo(x){const id=vid(x);if(!id)return;yt.src='https://www.youtube.com/embed/'+id+'?autoplay=1&loop=1&playlist='+id+'&controls=1&rel=0&playsinline=1&enablejsapi=1'}
 loadVideo(new URLSearchParams(location.search).get('v')||DEFAULT_V);
 function ytCmd(f){yt.contentWindow.postMessage(JSON.stringify({event:'command',func:f,args:''}),'*')}
 let vPlaying=true;
